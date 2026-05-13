@@ -84,7 +84,7 @@
 
     /* ===================== NAVBAR ===================== */
     #navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      position: fixed; top: ; left: 0; right: 0; z-index: 999;
       padding: 1rem 0;
       transition: background var(--trans), padding var(--trans);
     }
@@ -853,6 +853,141 @@
     @media (max-width: 600px) {
       .footer-top { grid-template-columns: 1fr; }
     }
+
+
+          /* ===================== CHATBOT TÁCTICO ===================== */
+      #chatbot-toggle {
+          position: fixed;
+          bottom: 2rem;
+          right: 5rem;
+          background: var(--tan);
+          color: var(--dark);
+          border: none;
+          padding: 0.8rem 1.5rem;
+          border-radius: var(--radius);
+          font-family: var(--ff-cond);
+          font-weight: 700;
+          cursor: pointer;
+          z-index: 1000;
+          display: flex;
+          align-items: center;
+          gap: 0.8rem;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+          transition: var(--trans);
+      }
+
+      #chatbot-toggle:hover {
+          background: var(--tan-light);
+          transform: scale(1.05);
+      }
+
+      #chatbot-window {
+          position: fixed;
+          bottom: 6rem;
+          right: 5rem;
+          width: 350px;
+          height: 500px;
+          background: var(--dark);
+          border: 1px solid var(--tan);
+          border-radius: var(--radius);
+          display: none; /* Se activa con JS */
+          flex-direction: column;
+          z-index: 1001;
+          box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+          overflow: hidden;
+      }
+
+      .chat-header {
+          background: var(--charcoal);
+          padding: 1rem;
+          border-bottom: 1px solid rgba(201,168,76,.3);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+      }
+
+      .chat-header strong {
+          font-family: var(--ff-head);
+          letter-spacing: 1px;
+          color: var(--tan);
+      }
+
+      .status-online {
+          display: block;
+          font-size: 0.7rem;
+          color: #4CAF50;
+          text-transform: uppercase;
+      }
+
+      #chat-close {
+          background: transparent;
+          border: none;
+          color: var(--muted);
+          font-size: 1.5rem;
+          cursor: pointer;
+      }
+
+      #chat-messages {
+          flex: 1;
+          padding: 1rem;
+          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          background: linear-gradient(to bottom, var(--dark), var(--charcoal));
+      }
+
+      .msg {
+          max-width: 85%;
+          padding: 0.8rem;
+          border-radius: var(--radius);
+          font-size: 0.9rem;
+          line-height: 1.4;
+      }
+
+      .msg-bot {
+          background: var(--charcoal);
+          color: var(--cream);
+          align-self: flex-start;
+          border-left: 3px solid var(--tan);
+      }
+
+      .msg-user {
+          background: var(--tan);
+          color: var(--dark);
+          align-self: flex-end;
+          font-weight: 600;
+      }
+
+      .chat-input-area {
+          padding: 1rem;
+          background: var(--charcoal);
+          display: flex;
+          gap: 0.5rem;
+      }
+
+      #chat-input {
+          flex: 1;
+          background: var(--dark);
+          border: 1px solid rgba(255,255,255,0.1);
+          padding: 0.6rem;
+          color: var(--cream);
+          outline: none;
+          font-family: var(--ff-body);
+      }
+
+      #chat-send {
+          background: var(--tan);
+          border: none;
+          padding: 0.5rem 1rem;
+          font-family: var(--ff-cond);
+          font-weight: 700;
+          cursor: pointer;
+      }
+
+      /* Scrollbar personalizada para el chat */
+      #chat-messages::-webkit-scrollbar { width: 4px; }
+      #chat-messages::-webkit-scrollbar-thumb { background: var(--tan); }
   </style>
 </head>
 <body>
@@ -1334,7 +1469,7 @@
             </div>
             <div class="form-group">
               <label>Teléfono</label>
-              <input type="tel" id="fphone" placeholder="0981 000 000" />
+              <input type="tel" id="fphone" placeholder="981 123 456" />
             </div>
             <div class="form-group full">
               <label>¿Qué te interesa?</label>
@@ -1420,6 +1555,33 @@
   <i class="fa fa-chevron-up"></i>
 </button>
 
+
+<!-- Botón Flotante del Chat -->
+<button id="chatbot-toggle" title="Asesoría Técnica">
+  <i class="fas fa-shield-alt"></i>
+  <span>Asesor Virtual</span>
+</button>
+
+<!-- Ventana del Chatbot -->
+<div id="chatbot-window">
+  <div class="chat-header">
+      <div class="chat-header-info">
+          <strong>GUN SHOP | ASESORÍA</strong>
+          <span class="status-online">Online</span>
+      </div>
+      <button id="chat-close">&times;</button>
+  </div>
+  
+  <div id="chat-messages">
+      <!-- El saludo inicial se carga por JS -->
+  </div>
+
+  <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Escriba su consulta legal o técnica..." autocomplete="off">
+      <button id="chat-send">ENVIAR</button>
+  </div>
+</div>
+
 <script>
   /* ---- Navbar scroll ---- */
   const navbar = document.getElementById('navbar');
@@ -1469,6 +1631,122 @@
     document.getElementById('formArea').style.display = 'none';
     document.getElementById('formSuccess').style.display = 'block';
   }
+
+
+
+  
+</script>
+
+<script>
+  const INFO_CONTACTO = {
+    whatsapp: "https://wa.me/595981123456?text=Hola,%20solicito%20asesoramiento%20sobre%20trámites",
+    telefono: "+595 981 123 456",
+    email: "contacto@gunsshop.com.py",
+    instagram: "https://instagram.com/gunshop_oficial",
+    web_ig: "@gunshop_oficial"
+};
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('chatbot-toggle');
+    const chatWindow = document.getElementById('chatbot-window');
+    const closeBtn = document.getElementById('chat-close');
+    const sendBtn = document.getElementById('chat-send');
+    const chatInput = document.getElementById('chat-input');
+    const messagesCont = document.getElementById('chat-messages');
+
+    // Abrir/Cerrar Chat
+    toggleBtn.addEventListener('click', () => {
+        chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+        if (messagesCont.children.length === 0) {
+            appendMessage('bot', 'Bienvenido al Centro de Asistencia de Gun Shop. Soy su asesor virtual. ¿Desea consultar sobre requisitos de compra o gestión de portación?');
+        }
+    });
+
+    closeBtn.addEventListener('click', () => chatWindow.style.display = 'none');
+
+    // Enviar mensaje
+    function handleSend() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        appendMessage('user', text);
+        chatInput.value = '';
+        
+        // Simular respuesta del bot
+        setTimeout(() => {
+            const response = getBotResponse(text.toLowerCase());
+            appendMessage('bot', response);
+        }, 800);
+    }
+
+    sendBtn.addEventListener('click', handleSend);
+    chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSend(); });
+
+    function appendMessage(sender, text) {
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('msg', sender === 'bot' ? 'msg-bot' : 'msg-user');
+    let formattedText = text.replace(/\n/g, '<br>');
+    formattedText = formattedText.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color:var(--tan); text-decoration:underline;">Click aquí</a>');
+    msgDiv.innerHTML = formattedText; 
+    messagesCont.appendChild(msgDiv);
+    messagesCont.scrollTop = messagesCont.scrollHeight;
+}
+
+    function getBotResponse(input) {
+    const i = input.toLowerCase();
+
+    // 1. REQUISITOS Y COMPRA
+    if (i.includes('requisito') || i.includes('necesito') || i.includes('comprar')) {
+        return `Para la compra de armas requerimos legalmente: \n1. Cédula vigente. \n2. Antecedentes penales. \n3. Test de idoneidad. \n\nPodemos ayudarte con toda la gestión aquí: ${INFO_CONTACTO.whatsapp}`;
+    }
+
+    // 2. GESTIÓN LEGAL Y PORTACIÓN
+    if (i.includes('portacion') || i.includes('gestion') || i.includes('habilitacion') || i.includes('carnet') || i.includes('tenencia')) {
+        return `Nuestro Departamento Jurídico se encarga de tu carnet de tenencia y portación de forma integral. \n\nEscríbenos directamente al gestor aquí: ${INFO_CONTACTO.whatsapp}`;
+    }
+
+    // 3. CONTACTO DIRECTO (TELÉFONO Y WHATSAPP)
+    if (i.includes('telefono') || i.includes('numero') || i.includes('whatsapp') || i.includes('llamar')) {
+        return `Atención inmediata:\n📞 Teléfono: ${INFO_CONTACTO.telefono}\n💬 WhatsApp: ${INFO_CONTACTO.whatsapp}`;
+    }
+
+    // 4. CORREO ELECTRÓNICO
+    if (i.includes('correo') || i.includes('email') || i.includes('mail')) {
+        return `Puedes enviarnos tus documentos o consultas a: \n✉️ ${INFO_CONTACTO.email}`;
+    }
+
+    // 5. REDES SOCIALES (INSTAGRAM)
+    if (i.includes('instagram') || i.includes('ig') || i.includes('redes')) {
+        return `Síguenos en Instagram para ver ingresos de mercadería: \n📸 ${INFO_CONTACTO.instagram}\nUser: ${INFO_CONTACTO.web_ig}`;
+    }
+
+    // 6. UBICACIÓN Y HORARIOS
+    if (i.includes('donde') || i.includes('ubicacion') || i.includes('direccion') || i.includes('sucursal')) {
+        return "Estamos ubicados en Av. Central 456, Distrito Táctico. \n📍 Ver en Google Maps: [Link a tu mapa]";
+    }
+
+    if (i.includes('horario') || i.includes('abierto')) {
+        return "Nuestros horarios son:\nLunes a Viernes: 08:00 - 18:00";
+    }
+
+    // 7. SERVICIOS ADICIONALES (TALLER Y PESCA)
+    if (i.includes('taller') || i.includes('arreglar') || i.includes('servicios') || i.includes('reparar') || i.includes('mantenimiento')) {
+        return `Contamos con taller propio de armería y service de reeles. Trae tu equipo para un presupuesto o consulta por WhatsApp: ${INFO_CONTACTO.whatsapp}`;
+    }
+
+    if (i.includes('pesca')) {
+        return "Somos expertos en pesca deportiva. Tenemos reeles de alta gama, cañas y señuelos. ¿Buscas algo para una especie en particular?";
+    }
+
+    if (i.includes('armas') || i.includes('arma')) {
+        return "Somos expertos en todo tipo de armas. Tenemos armas de fuego (cortas-largas), armas blancas contundentes y especiales. ¿Buscas alguna en particular?";
+    }
+
+    // RESPUESTA POR DEFECTO
+    return "Entiendo. Soy el Asistente Institucional de Gun Shop. ¿Necesitas información sobre **requisitos**, **gestión de carnets**, **contacto** o nuestra **ubicación**?";
+}
+});
 </script>
 </body>
 </html>
