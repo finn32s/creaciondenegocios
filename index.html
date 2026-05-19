@@ -872,30 +872,102 @@
     }
     .reveal.visible { opacity: 1; transform: none; }
 
-    /* ===================== RESPONSIVE — TABLET (≤900px) ===================== */
+    /* ===================== MOBILE NAV ===================== */
     @media (max-width: 900px) {
-
-      /* Navbar */
-      .hamburger { display: flex; }
+      .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .hamburger.open span:nth-child(2) { opacity: 0; transform: translateX(-10px); }
+      .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      .hamburger { 
+        display: flex; 
+        position: relative; 
+        z-index: 1000; 
+      }
+      
       .nav-links, .nav-cta {
         display: none;
         flex-direction: column;
         position: fixed;
         top: 0; left: 0; right: 0;
         background: rgba(26,28,24,.98);
-        padding: 5rem 2rem 2rem;
-        gap: 1.2rem;
+        padding: 6rem 2rem 2rem;
+        gap: 1.5rem;
         z-index: 998;
-        border-bottom: 1px solid rgba(201,168,76,.2);
       }
-      .nav-links.open, .nav-cta.open { display: flex; }
-      .nav-cta.open { top: auto; position: static; padding: 0; }
-      .nav-links a { font-size: 1.2rem; }
+      
+      .nav-links.open { 
+        display: flex; 
+        height: auto; 
+        padding-bottom: 6rem; 
+        border-bottom: 1px solid rgba(201,168,76,.15); 
+      }
+      
+      .nav-cta.open { 
+        display: flex; 
+        position: fixed; 
+        top: 21.5rem; 
+        bottom: auto;
+        padding: 0 2rem;
+        background: transparent; 
+        justify-content: center;
+      }
 
-      /* Hero */
-      .hero-content { padding: 7rem 0 3rem; }
-      .hero-stats { gap: 1.8rem; margin-top: 2.5rem; }
-      .crosshair, .crosshair-circle { display: none; }
+      #hero {
+        align-items: flex-start; 
+        min-height: 100vh;
+        height: auto;
+        width: 100vw;      
+        overflow-x: hidden;   
+        position: relative;
+      }
+
+      .hero-content {
+        padding: 8rem 1rem 5rem 1rem !important; 
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;  
+      }
+
+      .hero-heading {
+        word-wrap: break-word;
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
+      
+      .hero-heading .line3 {
+        display: block;
+        white-space: normal;
+      }
+
+      .hero-sub {
+        max-width: 100% !important;
+      }
+
+      .hero-actions {
+        max-width: 100%;
+        display: flex;
+        flex-wrap: wrap; 
+        gap: 1rem;
+      }
+
+      .crosshair, .crosshair-circle {
+        display: block !important;       
+        width: 350px !important;        
+        height: 350px !important;     
+        left: 50% !important;        
+        top: 35% !important;            
+        right: auto !important;
+        transform: translate(-50%, -50%) !important; 
+        opacity: 0.04 !important;     
+      }
+
+      .hero-stats {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 2rem 1rem !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
 
       /* Secciones — padding reducido */
       #historia, #mvv, #servicios, #articulos,
@@ -911,7 +983,19 @@
       .mvv-grid { grid-template-columns: 1fr; }
 
       /* Servicios */
-      .servicios-grid { grid-template-columns: 1fr 1fr; }
+      .servicios-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important; 
+        gap: 1.5rem !important; 
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+
+      .servicio-card {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 2rem 1.5rem !important;
+      }
 
       /* Artículos */
       .articulos-grid { grid-template-columns: 1fr 1fr; }
@@ -927,11 +1011,23 @@
       .ceo-highlight .miembro-avatar { margin: 0 auto; }
       .ceo-highlight .miembro-desc { font-size: .95rem; }
 
-      /* Testimonios */
-      .testimonios-grid { grid-template-columns: 1fr 1fr; }
+     /* ===================== SECCIÓN TESTIMONIOS RESPONSIVA ===================== */
+      .testimonios-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1.5rem !important; 
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+
+      .testimonio-card {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 2rem 1.5rem !important; 
+      }
 
       /* Contacto */
-      .contacto-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .contacto-grid { grid-template-columns: 1fr }
 
       /* Formulario */
       .form-grid { grid-template-columns: 1fr; }
@@ -939,117 +1035,40 @@
       /* Footer */
       .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
 
-      /* Chatbot — ocupa más ancho en tablet */
-      #chatbot-window { width: 320px; }
-    }
-
-    /* ===================== RESPONSIVE — MÓVIL (≤600px) ===================== */
-    @media (max-width: 600px) {
-
-      /* Contenedor */
-      .container { padding: 0 1.2rem; }
-
-      /* Hero */
-      .hero-content { padding: 6.5rem 0 2.5rem; }
-      .hero-heading { line-height: 1; }
-      .hero-sub { font-size: .95rem; }
-      .hero-actions { flex-direction: column; }
-      .hero-actions .btn { text-align: center; }
-      .hero-stats { gap: 1.2rem; flex-wrap: wrap; }
-      .stat-num { font-size: 2.2rem; }
-
-      /* Secciones */
-      #historia, #mvv, #servicios, #articulos,
-      #equipo, #testimonios, #proveedores, #contacto {
-        padding: 3.5rem 0;
-      }
-      #proveedores { padding: 3rem 0; }
-
-      /* Section title */
-      .section-title { font-size: clamp(2rem, 8vw, 3rem); }
-
-      /* Historia */
-      .historia-img-box { aspect-ratio: 3/2; }
-      .historia-badge {
-        position: static;
-        display: inline-block;
-        margin-top: 1.5rem;
+         /* ===================== CHATBOT RESPONSIVO ===================== */
+         #chatbot-toggle {
+        right: 1.5rem !important; 
+        bottom: 1.5rem !important;
+        padding: 0.6rem 1.2rem !important; 
       }
 
-      /* MVV */
-      .mvv-card { padding: 1.8rem; }
-
-      /* Servicios */
-      .servicios-grid { grid-template-columns: 1fr; }
-
-      /* Artículos */
-      .articulos-grid { grid-template-columns: 1fr 1fr; gap: .8rem; }
-      .articulo-img { height: 120px; font-size: 2.2rem; }
-      .articulo-body { padding: .9rem; }
-      .articulo-name { font-size: 1rem; }
-      .articulo-price { font-size: 1.2rem; }
-
-      /* Equipo */
-      .equipo-grid { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
-      .ceo-highlight { gap: 1rem; padding: 1.5rem; }
-      .ceo-highlight .miembro-avatar {
-        width: 100px !important;
-        height: 100px !important;
-      }
-      .miembro-avatar { width: 90px; height: 90px; }
-      .avatar-initials { font-size: 1.6rem; }
-
-      /* Testimonios */
-      .testimonios-grid { grid-template-columns: 1fr; }
-
-      /* Proveedores */
-      .proveedores-row { gap: 1rem; }
-      .proveedor-item { padding: .8rem 1.2rem; font-size: .88rem; }
-
-      /* Contacto */
-      .form-card { padding: 1.5rem; }
-
-      /* Footer */
-      .footer-top { grid-template-columns: 1fr; gap: 1.5rem; }
-      .footer-bottom { flex-direction: column; text-align: center; gap: .8rem; }
-
-      /* Botones flotantes — reorganizar para no taparse */
-      #scrollTop {
-        bottom: 1rem;
-        right: 1rem;
-        width: 38px;
-        height: 38px;
-        font-size: .95rem;
-      }
-      #chatbot-toggle {
-        bottom: 1rem;
-        right: 4.5rem;
-        padding: .6rem 1rem;
-        font-size: .85rem;
-      }
-      #chatbot-toggle span { display: none; } /* Solo ícono en móvil muy pequeño */
       #chatbot-window {
-        bottom: 0;
-        right: 0;
-        left: 0;
-        width: 100%;
-        height: 75vh;
-        border-radius: 16px 16px 0 0;
-        border-left: none;
-        border-right: none;
-        border-bottom: none;
+        right: 1.5rem !important;   
+        bottom: 5.5rem !important;   
+        width: calc(100% - 3rem) !important; 
+        max-width: 360px !important; 
+        height: 70vh !important;     
+        z-index: 2000 !important; 
       }
     }
 
-    /* ===================== RESPONSIVE — MÓVIL MUY PEQUEÑO (≤400px) ===================== */
-    @media (max-width: 400px) {
-      .articulos-grid { grid-template-columns: 1fr; }
-      .equipo-grid    { grid-template-columns: 1fr; }
-      .hero-stats     { gap: 1rem; }
-      .stat-num       { font-size: 2rem; }
+        @media (max-width: 600px) {
+          .footer-top { grid-template-columns: 1fr; }
+          
+        .servicios-grid {
+          grid-template-columns: 1fr !important; 
+        }
+        
+        .servicios-intro {
+          text-align: center; 
+          padding: 0 1rem;
+        }
+
+        .testimonios-grid {
+      grid-template-columns: 1fr !important;
     }
 
-
+        }
           /* ===================== CHATBOT MEJORADO ===================== */
       #chatbot-toggle {
           position: fixed;
@@ -1857,7 +1876,7 @@
 <button id="chatbot-toggle" title="Asesor Virtual GunsShop">
   <div class="chat-dot"></div>
   <i class="fas fa-shield-alt"></i>
-  <span>Asesor Virtual</span>
+  <span></span>
 </button>
 
 <!-- Ventana del Chatbot -->
@@ -1884,8 +1903,8 @@
 </div>
 
 <script>
-  /* ---- Navbar scroll ---- */
-  const navbar = document.getElementById('navbar');
+/* ---- Navbar scroll ---- */
+const navbar = document.getElementById('navbar');
   const scrollTopBtn = document.getElementById('scrollTop');
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 60);
@@ -1894,14 +1913,39 @@
 
   /* ---- Hamburger ---- */
   function toggleMenu() {
-    document.getElementById('navLinks').classList.toggle('open');
-    document.getElementById('navCta').classList.toggle('open');
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.getElementById('navLinks');
+    const navCta = document.getElementById('navCta');
+
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+    navCta.classList.toggle('open');
   }
-  document.querySelectorAll('.nav-links a').forEach(a => {
+
+   // Cerrar el menú al hacer clic en cualquier opción (enlace)
+   document.querySelectorAll('.nav-links a').forEach(a => {
     a.addEventListener('click', () => {
+      document.querySelector('.hamburger').classList.remove('open');
       document.getElementById('navLinks').classList.remove('open');
       document.getElementById('navCta').classList.remove('open');
     });
+  });
+
+   // Cerrar el menú automáticamente si se toca fuera de él
+   document.addEventListener('click', (e) => {
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.getElementById('navLinks');
+    const navCta = document.getElementById('navCta');
+
+    // Validamos si el menú móvil está desplegado
+    if (navLinks.classList.contains('open')) {
+      // Si el clic NO se hizo dentro del botón, ni de los links, ni del CTA, lo cerramos
+      if (!hamburger.contains(e.target) && !navLinks.contains(e.target) && !navCta.contains(e.target)) {
+        hamburger.classList.remove('open');
+        navLinks.classList.remove('open');
+        navCta.classList.remove('open');
+      }
+    }
   });
 
   /* ---- Reveal on scroll ---- */
