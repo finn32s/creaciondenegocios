@@ -480,7 +480,52 @@
       font-size: 2.5rem;
       color: var(--tan);
       position: relative;
+      overflow: hidden;
     }
+    /* Foto real: contener dentro del círculo */
+    .miembro-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 50%;
+      display: block;
+    }
+    /* Avatar con iniciales */
+    .avatar-initials {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--ff-head);
+      font-size: 2rem;
+      letter-spacing: .05em;
+      color: var(--dark);
+      font-weight: 700;
+      user-select: none;
+    }
+    .av-1 { background: linear-gradient(135deg, #c9a84c, #e8c96a); }
+    .av-2 { background: linear-gradient(135deg, #4a7c59, #6daa80); }
+    .av-3 { background: linear-gradient(135deg, #7c4a4a, #aa6d6d); }
+    .av-4 { background: linear-gradient(135deg, #4a5e7c, #6d88aa); }
+    .av-5 { background: linear-gradient(135deg, #7c6d4a, #aa956d); }
+    /* Avatar clientes testimonios */
+    .author-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      color: var(--dark);
+      flex-shrink: 0;
+      font-family: var(--ff-head);
+      font-weight: 700;
+      overflow: hidden;
+    }
+    .av-c1 { background: linear-gradient(135deg, #c9a84c, #e8c96a); }
+    .av-c2 { background: linear-gradient(135deg, #4a7c59, #6daa80); }
+    .av-c3 { background: linear-gradient(135deg, #7c4a4a, #aa6d6d); }
+    .av-c4 { background: linear-gradient(135deg, #4a5e7c, #6d88aa); }
+    .av-c5 { background: linear-gradient(135deg, #7c6d4a, #aa956d); }
+    .av-c6 { background: linear-gradient(135deg, #5e4a7c, #886daa); }
     .miembro-badge {
       position: absolute;
       bottom: 0; right: 0;
@@ -827,8 +872,10 @@
     }
     .reveal.visible { opacity: 1; transform: none; }
 
-    /* ===================== MOBILE NAV ===================== */
+    /* ===================== RESPONSIVE — TABLET (≤900px) ===================== */
     @media (max-width: 900px) {
+
+      /* Navbar */
       .hamburger { display: flex; }
       .nav-links, .nav-cta {
         display: none;
@@ -836,23 +883,408 @@
         position: fixed;
         top: 0; left: 0; right: 0;
         background: rgba(26,28,24,.98);
-        padding: 6rem 2rem 2rem;
-        gap: 1.5rem;
+        padding: 5rem 2rem 2rem;
+        gap: 1.2rem;
         z-index: 998;
+        border-bottom: 1px solid rgba(201,168,76,.2);
       }
       .nav-links.open, .nav-cta.open { display: flex; }
       .nav-cta.open { top: auto; position: static; padding: 0; }
-      .historia-grid,
-      .contacto-grid { grid-template-columns: 1fr; }
+      .nav-links a { font-size: 1.2rem; }
+
+      /* Hero */
+      .hero-content { padding: 7rem 0 3rem; }
+      .hero-stats { gap: 1.8rem; margin-top: 2.5rem; }
+      .crosshair, .crosshair-circle { display: none; }
+
+      /* Secciones — padding reducido */
+      #historia, #mvv, #servicios, #articulos,
+      #equipo, #testimonios, #proveedores, #contacto {
+        padding: 4.5rem 0;
+      }
+
+      /* Historia */
+      .historia-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .historia-badge { bottom: -1rem; left: 0; }
+
+      /* MVV */
       .mvv-grid { grid-template-columns: 1fr; }
-      .footer-top { grid-template-columns: 1fr 1fr; }
-      .ceo-highlight { grid-template-columns: 1fr; text-align: center; }
+
+      /* Servicios */
+      .servicios-grid { grid-template-columns: 1fr 1fr; }
+
+      /* Artículos */
+      .articulos-grid { grid-template-columns: 1fr 1fr; }
+      .articulos-header { flex-direction: column; align-items: flex-start; }
+
+      /* Equipo */
+      .equipo-grid { grid-template-columns: 1fr 1fr; }
+      .ceo-highlight {
+        grid-column: 1 / -1;
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
       .ceo-highlight .miembro-avatar { margin: 0 auto; }
+      .ceo-highlight .miembro-desc { font-size: .95rem; }
+
+      /* Testimonios */
+      .testimonios-grid { grid-template-columns: 1fr 1fr; }
+
+      /* Contacto */
+      .contacto-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+
+      /* Formulario */
       .form-grid { grid-template-columns: 1fr; }
+
+      /* Footer */
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+
+      /* Chatbot — ocupa más ancho en tablet */
+      #chatbot-window { width: 320px; }
     }
+
+    /* ===================== RESPONSIVE — MÓVIL (≤600px) ===================== */
     @media (max-width: 600px) {
-      .footer-top { grid-template-columns: 1fr; }
+
+      /* Contenedor */
+      .container { padding: 0 1.2rem; }
+
+      /* Hero */
+      .hero-content { padding: 6.5rem 0 2.5rem; }
+      .hero-heading { line-height: 1; }
+      .hero-sub { font-size: .95rem; }
+      .hero-actions { flex-direction: column; }
+      .hero-actions .btn { text-align: center; }
+      .hero-stats { gap: 1.2rem; flex-wrap: wrap; }
+      .stat-num { font-size: 2.2rem; }
+
+      /* Secciones */
+      #historia, #mvv, #servicios, #articulos,
+      #equipo, #testimonios, #proveedores, #contacto {
+        padding: 3.5rem 0;
+      }
+      #proveedores { padding: 3rem 0; }
+
+      /* Section title */
+      .section-title { font-size: clamp(2rem, 8vw, 3rem); }
+
+      /* Historia */
+      .historia-img-box { aspect-ratio: 3/2; }
+      .historia-badge {
+        position: static;
+        display: inline-block;
+        margin-top: 1.5rem;
+      }
+
+      /* MVV */
+      .mvv-card { padding: 1.8rem; }
+
+      /* Servicios */
+      .servicios-grid { grid-template-columns: 1fr; }
+
+      /* Artículos */
+      .articulos-grid { grid-template-columns: 1fr 1fr; gap: .8rem; }
+      .articulo-img { height: 120px; font-size: 2.2rem; }
+      .articulo-body { padding: .9rem; }
+      .articulo-name { font-size: 1rem; }
+      .articulo-price { font-size: 1.2rem; }
+
+      /* Equipo */
+      .equipo-grid { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+      .ceo-highlight { gap: 1rem; padding: 1.5rem; }
+      .ceo-highlight .miembro-avatar {
+        width: 100px !important;
+        height: 100px !important;
+      }
+      .miembro-avatar { width: 90px; height: 90px; }
+      .avatar-initials { font-size: 1.6rem; }
+
+      /* Testimonios */
+      .testimonios-grid { grid-template-columns: 1fr; }
+
+      /* Proveedores */
+      .proveedores-row { gap: 1rem; }
+      .proveedor-item { padding: .8rem 1.2rem; font-size: .88rem; }
+
+      /* Contacto */
+      .form-card { padding: 1.5rem; }
+
+      /* Footer */
+      .footer-top { grid-template-columns: 1fr; gap: 1.5rem; }
+      .footer-bottom { flex-direction: column; text-align: center; gap: .8rem; }
+
+      /* Botones flotantes — reorganizar para no taparse */
+      #scrollTop {
+        bottom: 1rem;
+        right: 1rem;
+        width: 38px;
+        height: 38px;
+        font-size: .95rem;
+      }
+      #chatbot-toggle {
+        bottom: 1rem;
+        right: 4.5rem;
+        padding: .6rem 1rem;
+        font-size: .85rem;
+      }
+      #chatbot-toggle span { display: none; } /* Solo ícono en móvil muy pequeño */
+      #chatbot-window {
+        bottom: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        height: 75vh;
+        border-radius: 16px 16px 0 0;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+      }
     }
+
+    /* ===================== RESPONSIVE — MÓVIL MUY PEQUEÑO (≤400px) ===================== */
+    @media (max-width: 400px) {
+      .articulos-grid { grid-template-columns: 1fr; }
+      .equipo-grid    { grid-template-columns: 1fr; }
+      .hero-stats     { gap: 1rem; }
+      .stat-num       { font-size: 2rem; }
+    }
+
+
+          /* ===================== CHATBOT MEJORADO ===================== */
+      #chatbot-toggle {
+          position: fixed;
+          bottom: 5.5rem;
+          right: 1.5rem;
+          background: var(--tan);
+          color: var(--dark);
+          border: none;
+          padding: 0.75rem 1.3rem;
+          border-radius: 50px;
+          font-family: var(--ff-cond);
+          font-weight: 700;
+          font-size: .95rem;
+          letter-spacing: .05em;
+          cursor: pointer;
+          z-index: 1000;
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+          box-shadow: 0 8px 25px rgba(201,168,76,.4);
+          transition: var(--trans);
+      }
+      #chatbot-toggle:hover {
+          background: var(--tan-light);
+          transform: translateY(-3px);
+          box-shadow: 0 12px 35px rgba(201,168,76,.5);
+      }
+      #chatbot-toggle .chat-dot {
+          width: 8px; height: 8px;
+          background: #4CAF50;
+          border-radius: 50%;
+          animation: pulse-dot 2s infinite;
+      }
+      @keyframes pulse-dot {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: .6; transform: scale(1.3); }
+      }
+
+      #chatbot-window {
+          position: fixed;
+          bottom: 10.5rem;
+          right: 1.5rem;
+          width: 360px;
+          height: 520px;
+          background: var(--dark);
+          border: 1px solid rgba(201,168,76,.3);
+          border-radius: 12px;
+          display: none;
+          flex-direction: column;
+          z-index: 1001;
+          box-shadow: 0 20px 60px rgba(0,0,0,.8), 0 0 0 1px rgba(201,168,76,.1);
+          overflow: hidden;
+          animation: slideUp .25s ease;
+      }
+      @keyframes slideUp {
+          from { opacity: 0; transform: translateY(20px) scale(.97); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
+      .chat-header {
+          background: linear-gradient(135deg, var(--charcoal), var(--olive));
+          padding: 1rem 1.2rem;
+          border-bottom: 1px solid rgba(201,168,76,.25);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-shrink: 0;
+      }
+      .chat-header-left { display: flex; align-items: center; gap: .75rem; }
+      .chat-avatar-icon {
+          width: 36px; height: 36px;
+          background: var(--tan);
+          border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          font-size: .9rem;
+          color: var(--dark);
+          flex-shrink: 0;
+      }
+      .chat-header strong {
+          font-family: var(--ff-cond);
+          font-size: 1rem;
+          letter-spacing: .08em;
+          color: var(--cream);
+          display: block;
+      }
+      .status-online {
+          font-size: .7rem;
+          color: #4CAF50;
+          text-transform: uppercase;
+          letter-spacing: .1em;
+          display: flex; align-items: center; gap: .3rem;
+      }
+      .status-online::before {
+          content: '';
+          width: 6px; height: 6px;
+          background: #4CAF50;
+          border-radius: 50%;
+          display: inline-block;
+      }
+      #chat-close {
+          background: rgba(255,255,255,.1);
+          border: none;
+          color: var(--muted);
+          font-size: 1.1rem;
+          cursor: pointer;
+          width: 28px; height: 28px;
+          border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          transition: var(--trans);
+          line-height: 1;
+      }
+      #chat-close:hover { background: rgba(255,255,255,.2); color: var(--cream); }
+
+      #chat-messages {
+          flex: 1;
+          padding: 1rem;
+          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
+          gap: .8rem;
+          background: var(--dark);
+      }
+      #chat-messages::-webkit-scrollbar { width: 4px; }
+      #chat-messages::-webkit-scrollbar-thumb { background: rgba(201,168,76,.4); border-radius: 2px; }
+
+      .msg {
+          max-width: 82%;
+          padding: .7rem .9rem;
+          border-radius: 12px;
+          font-size: .88rem;
+          line-height: 1.5;
+          animation: msgIn .2s ease;
+      }
+      @keyframes msgIn {
+          from { opacity: 0; transform: translateY(8px); }
+          to   { opacity: 1; transform: translateY(0); }
+      }
+      .msg-bot {
+          background: var(--charcoal);
+          color: var(--cream);
+          align-self: flex-start;
+          border-left: 3px solid var(--tan);
+          border-bottom-left-radius: 3px;
+      }
+      .msg-user {
+          background: linear-gradient(135deg, var(--tan), var(--tan-light));
+          color: var(--dark);
+          align-self: flex-end;
+          font-weight: 600;
+          border-bottom-right-radius: 3px;
+      }
+      /* Botones de respuesta rápida */
+      .quick-replies {
+          display: flex;
+          flex-wrap: wrap;
+          gap: .4rem;
+          align-self: flex-start;
+          max-width: 100%;
+      }
+      .quick-btn {
+          background: transparent;
+          border: 1px solid rgba(201,168,76,.5);
+          color: var(--tan);
+          padding: .35rem .75rem;
+          border-radius: 50px;
+          font-family: var(--ff-cond);
+          font-size: .78rem;
+          letter-spacing: .05em;
+          cursor: pointer;
+          transition: var(--trans);
+          white-space: nowrap;
+      }
+      .quick-btn:hover {
+          background: var(--tan);
+          color: var(--dark);
+          border-color: var(--tan);
+      }
+      /* Typing indicator */
+      .typing-indicator {
+          display: flex; gap: 4px; align-items: center;
+          padding: .7rem .9rem;
+          background: var(--charcoal);
+          border-left: 3px solid var(--tan);
+          border-radius: 12px;
+          border-bottom-left-radius: 3px;
+          align-self: flex-start;
+          width: 56px;
+      }
+      .typing-indicator span {
+          width: 7px; height: 7px;
+          background: var(--muted);
+          border-radius: 50%;
+          animation: typing .9s infinite;
+      }
+      .typing-indicator span:nth-child(2) { animation-delay: .2s; }
+      .typing-indicator span:nth-child(3) { animation-delay: .4s; }
+      @keyframes typing {
+          0%, 60%, 100% { transform: translateY(0); opacity: .4; }
+          30% { transform: translateY(-6px); opacity: 1; }
+      }
+
+      .chat-input-area {
+          padding: .8rem 1rem;
+          background: var(--charcoal);
+          display: flex;
+          gap: .5rem;
+          border-top: 1px solid rgba(255,255,255,.07);
+          flex-shrink: 0;
+      }
+      #chat-input {
+          flex: 1;
+          background: var(--dark);
+          border: 1px solid rgba(255,255,255,.1);
+          border-radius: 8px;
+          padding: .55rem .9rem;
+          color: var(--cream);
+          outline: none;
+          font-family: var(--ff-body);
+          font-size: .9rem;
+          transition: border-color var(--trans);
+      }
+      #chat-input:focus { border-color: rgba(201,168,76,.5); }
+      #chat-input::placeholder { color: var(--muted); }
+      #chat-send {
+          background: var(--tan);
+          border: none;
+          padding: .55rem .9rem;
+          border-radius: 8px;
+          font-size: 1rem;
+          color: var(--dark);
+          cursor: pointer;
+          transition: var(--trans);
+          display: flex; align-items: center;
+      }
+      #chat-send:hover { background: var(--tan-light); transform: scale(1.05); }
   </style>
 </head>
 <body>
@@ -1113,8 +1545,8 @@
 
       <!-- CEO destacado -->
       <div class="ceo-highlight reveal">
-        <div class="miembro-avatar">
-          <i class="fa fa-user-tie"></i>
+        <div class="miembro-avatar" style="width:130px;height:130px;font-size:3rem;flex-shrink:0;">
+          <img src="ariel.jfif" alt="Ariel Lesmo" />
           <div class="miembro-badge"><i class="fa fa-star"></i></div>
         </div>
         <div>
@@ -1127,7 +1559,7 @@
       <!-- Ejecutivos y vendedores -->
       <div class="miembro-card reveal">
         <div class="miembro-avatar">
-          <i class="fa fa-user"></i>
+          <div class="avatar-initials av-2">OR</div>
           <div class="miembro-badge"><i class="fa fa-briefcase"></i></div>
         </div>
         <div class="miembro-name">Odilio Roman</div>
@@ -1137,7 +1569,7 @@
 
       <div class="miembro-card reveal">
         <div class="miembro-avatar">
-          <i class="fa fa-user"></i>
+          <div class="avatar-initials av-3">FR</div>
           <div class="miembro-badge"><i class="fa fa-tag"></i></div>
         </div>
         <div class="miembro-name">Francisco Romero</div>
@@ -1147,7 +1579,7 @@
 
       <div class="miembro-card reveal">
         <div class="miembro-avatar">
-          <i class="fa fa-user"></i>
+          <div class="avatar-initials av-4">JP</div>
           <div class="miembro-badge"><i class="fa fa-fish"></i></div>
         </div>
         <div class="miembro-name">Juan Pérez</div>
@@ -1157,7 +1589,7 @@
 
       <div class="miembro-card reveal">
         <div class="miembro-avatar">
-          <i class="fa fa-user"></i>
+          <div class="avatar-initials av-5">MG</div>
           <div class="miembro-badge"><i class="fa fa-box"></i></div>
         </div>
         <div class="miembro-name">María González</div>
@@ -1183,7 +1615,7 @@
         <div class="stars">★★★★★</div>
         <p class="testimonio-text">Llevo 3 años comprando en GunsShop y nunca me defraudaron. Los precios son justos, el stock siempre disponible y la atención es excelente. Recomiendo a todos mis compañeros de caza.</p>
         <div class="testimonio-author">
-          <div class="author-avatar"><i class="fa fa-user"></i></div>
+          <div class="author-avatar av-c1">CB</div>
           <div>
             <div class="author-name">Carlos Benítez</div>
             <div class="author-location">Asunción, Paraguay</div>
@@ -1196,7 +1628,7 @@
         <div class="stars">★★★★★</div>
         <p class="testimonio-text">Me consiguieron una caña de pescar importada que no encontraba en ningún otro lado. Además me financiaron la compra sin problemas. El mejor servicio de Asunción sin dudas.</p>
         <div class="testimonio-author">
-          <div class="author-avatar"><i class="fa fa-user"></i></div>
+          <div class="author-avatar av-c2">RS</div>
           <div>
             <div class="author-name">Roberto Silva</div>
             <div class="author-location">San Lorenzo, Paraguay</div>
@@ -1209,7 +1641,7 @@
         <div class="stars">★★★★☆</div>
         <p class="testimonio-text">El equipo de vendedores conoce muy bien los productos. Me asesoraron perfectamente para elegir mi primer arma de aire comprimido. Volveré sin dudas para la próxima temporada.</p>
         <div class="testimonio-author">
-          <div class="author-avatar"><i class="fa fa-user"></i></div>
+          <div class="author-avatar av-c3">DF</div>
           <div>
             <div class="author-name">Diego Fernández</div>
             <div class="author-location">Luque, Paraguay</div>
@@ -1222,7 +1654,7 @@
         <div class="stars">★★★★★</div>
         <p class="testimonio-text">Compro para mi club deportivo siempre en GunsShop. Tienen todo lo que necesitamos, me dan crédito y siempre me dan factura. Muy profesionales en todo sentido.</p>
         <div class="testimonio-author">
-          <div class="author-avatar"><i class="fa fa-user"></i></div>
+          <div class="author-avatar av-c4">AM</div>
           <div>
             <div class="author-name">Alejandro Meza</div>
             <div class="author-location">Villa Hayes, Paraguay</div>
@@ -1235,7 +1667,7 @@
         <div class="stars">★★★★★</div>
         <p class="testimonio-text">Envían al interior sin problemas. Pedí municiones y llegaron en 2 días en perfectas condiciones. El seguimiento del pedido fue impecable. Muy recomendados.</p>
         <div class="testimonio-author">
-          <div class="author-avatar"><i class="fa fa-user"></i></div>
+          <div class="author-avatar av-c5">GR</div>
           <div>
             <div class="author-name">Gustavo Ríos</div>
             <div class="author-location">Coronel Oviedo, Paraguay</div>
@@ -1248,7 +1680,7 @@
         <div class="stars">★★★★★</div>
         <p class="testimonio-text">Vine a ver reels y me fui con todo el equipo de pesca completo porque me asesoraron tan bien que no pude resistirme. El precio y la calidad son imbatibles en el mercado.</p>
         <div class="testimonio-author">
-          <div class="author-avatar"><i class="fa fa-user"></i></div>
+          <div class="author-avatar av-c6">MG</div>
           <div>
             <div class="author-name">Marcos Gaona</div>
             <div class="author-location">Encarnación, Paraguay</div>
@@ -1334,7 +1766,7 @@
             </div>
             <div class="form-group">
               <label>Teléfono</label>
-              <input type="tel" id="fphone" placeholder="0981 000 000" />
+              <input type="tel" id="fphone" placeholder="981 123 456" />
             </div>
             <div class="form-group full">
               <label>¿Qué te interesa?</label>
@@ -1420,6 +1852,37 @@
   <i class="fa fa-chevron-up"></i>
 </button>
 
+
+<!-- Botón Flotante del Chat -->
+<button id="chatbot-toggle" title="Asesor Virtual GunsShop">
+  <div class="chat-dot"></div>
+  <i class="fas fa-shield-alt"></i>
+  <span>Asesor Virtual</span>
+</button>
+
+<!-- Ventana del Chatbot -->
+<div id="chatbot-window">
+  <div class="chat-header">
+    <div class="chat-header-left">
+      <div class="chat-avatar-icon"><i class="fas fa-shield-alt"></i></div>
+      <div>
+        <strong>GunShop · Asesoría</strong>
+        <span class="status-online">En línea ahora</span>
+      </div>
+    </div>
+    <button id="chat-close" title="Cerrar"><i class="fa fa-xmark"></i></button>
+  </div>
+
+  <div id="chat-messages">
+    <!-- El saludo inicial se carga por JS -->
+  </div>
+
+  <div class="chat-input-area">
+    <input type="text" id="chat-input" placeholder="Escribí tu consulta..." autocomplete="off" />
+    <button id="chat-send" title="Enviar"><i class="fa fa-paper-plane"></i></button>
+  </div>
+</div>
+
 <script>
   /* ---- Navbar scroll ---- */
   const navbar = document.getElementById('navbar');
@@ -1469,6 +1932,166 @@
     document.getElementById('formArea').style.display = 'none';
     document.getElementById('formSuccess').style.display = 'block';
   }
+
+
+
+  
+</script>
+
+<script>
+  const INFO_CONTACTO = {
+    whatsapp: "https://wa.me/595981123456?text=Hola,%20solicito%20asesoramiento%20sobre%20trámites",
+    telefono: "+595 981 123 456",
+    email: "contacto@gunsshop.com.py",
+    instagram: "https://instagram.com/gunshop_oficial",
+    web_ig: "@gunshop_oficial"
+  };
+
+  const QUICK_REPLIES_INICIO = [
+    { label: "🛒 Comprar un arma", query: "requisitos para comprar" },
+    { label: "🎣 Artículos de pesca", query: "pesca" },
+    { label: "📋 Gestión de carnet", query: "portacion carnet" },
+    { label: "📍 Dónde están", query: "ubicacion" },
+    { label: "🕐 Horarios", query: "horario" },
+    { label: "📞 Contacto", query: "telefono whatsapp" },
+  ];
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn   = document.getElementById('chatbot-toggle');
+    const chatWindow  = document.getElementById('chatbot-window');
+    const closeBtn    = document.getElementById('chat-close');
+    const sendBtn     = document.getElementById('chat-send');
+    const chatInput   = document.getElementById('chat-input');
+    const messagesCont = document.getElementById('chat-messages');
+    let chatOpened = false;
+
+    toggleBtn.addEventListener('click', () => {
+      const isOpen = chatWindow.style.display === 'flex';
+      chatWindow.style.display = isOpen ? 'none' : 'flex';
+      if (!isOpen && !chatOpened) {
+        chatOpened = true;
+        appendMessage('bot', '¡Bienvenido a <strong>GunsShop</strong>! 🎯<br>Soy tu asesor virtual. ¿En qué puedo ayudarte hoy?');
+        setTimeout(() => appendQuickReplies(QUICK_REPLIES_INICIO), 400);
+      }
+    });
+
+    closeBtn.addEventListener('click', () => chatWindow.style.display = 'none');
+
+    function handleSend() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+      appendMessage('user', text);
+      chatInput.value = '';
+      showTyping();
+      setTimeout(() => {
+        removeTyping();
+        const response = getBotResponse(text.toLowerCase());
+        appendMessage('bot', response);
+        // Mostrar quick replies de vuelta si la respuesta lo amerita
+        setTimeout(() => appendQuickReplies(QUICK_REPLIES_INICIO), 300);
+      }, 900 + Math.random() * 400);
+    }
+
+    sendBtn.addEventListener('click', handleSend);
+    chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSend(); });
+
+    function appendMessage(sender, html) {
+      // Eliminar quick replies previos
+      const prev = messagesCont.querySelector('.quick-replies');
+      if (prev) prev.remove();
+
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('msg', sender === 'bot' ? 'msg-bot' : 'msg-user');
+      // Formatear texto plano: saltos de línea y links
+      let formatted = html
+        .replace(/\n/g, '<br>')
+        .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color:var(--tan);text-decoration:underline;">Click aquí ↗</a>');
+      msgDiv.innerHTML = formatted;
+      messagesCont.appendChild(msgDiv);
+      messagesCont.scrollTop = messagesCont.scrollHeight;
+    }
+
+    function appendQuickReplies(replies) {
+      const prev = messagesCont.querySelector('.quick-replies');
+      if (prev) prev.remove();
+      const container = document.createElement('div');
+      container.classList.add('quick-replies');
+      replies.forEach(r => {
+        const btn = document.createElement('button');
+        btn.classList.add('quick-btn');
+        btn.textContent = r.label;
+        btn.addEventListener('click', () => {
+          appendMessage('user', r.label);
+          container.remove();
+          showTyping();
+          setTimeout(() => {
+            removeTyping();
+            appendMessage('bot', getBotResponse(r.query));
+            setTimeout(() => appendQuickReplies(QUICK_REPLIES_INICIO), 300);
+          }, 800);
+        });
+        container.appendChild(btn);
+      });
+      messagesCont.appendChild(container);
+      messagesCont.scrollTop = messagesCont.scrollHeight;
+    }
+
+    function showTyping() {
+      const t = document.createElement('div');
+      t.classList.add('typing-indicator');
+      t.id = 'typing';
+      t.innerHTML = '<span></span><span></span><span></span>';
+      messagesCont.appendChild(t);
+      messagesCont.scrollTop = messagesCont.scrollHeight;
+    }
+
+    function removeTyping() {
+      const t = document.getElementById('typing');
+      if (t) t.remove();
+    }
+
+    function getBotResponse(input) {
+      const i = input.toLowerCase();
+
+      if (i.includes('requisito') || i.includes('necesito') || i.includes('comprar')) {
+        return `Para la compra de armas requerimos:\n1️⃣ Cédula de identidad vigente\n2️⃣ Antecedentes penales limpios\n3️⃣ Test de idoneidad\n\nPodemos guiarte en todo el proceso 👉 ${INFO_CONTACTO.whatsapp}`;
+      }
+      if (i.includes('portacion') || i.includes('gestion') || i.includes('habilitacion') || i.includes('carnet') || i.includes('tenencia')) {
+        return `Nuestro equipo te asiste con el trámite de <strong>carnet de tenencia y portación</strong> de forma integral 📋\n\nEscribinos al WhatsApp: ${INFO_CONTACTO.whatsapp}`;
+      }
+      if (i.includes('telefono') || i.includes('numero') || i.includes('whatsapp') || i.includes('llamar') || i.includes('contacto')) {
+        return `Podés contactarnos por:\n📞 Teléfono: ${INFO_CONTACTO.telefono}\n💬 WhatsApp: ${INFO_CONTACTO.whatsapp}\n✉️ Email: ${INFO_CONTACTO.email}`;
+      }
+      if (i.includes('correo') || i.includes('email') || i.includes('mail')) {
+        return `Envianos tus consultas o documentos a:\n✉️ <strong>${INFO_CONTACTO.email}</strong>`;
+      }
+      if (i.includes('instagram') || i.includes('ig') || i.includes('redes')) {
+        return `Seguinos en Instagram para ver novedades y nuevos ingresos 📸\n${INFO_CONTACTO.instagram}\nUser: <strong>${INFO_CONTACTO.web_ig}</strong>`;
+      }
+      if (i.includes('donde') || i.includes('ubicacion') || i.includes('direccion') || i.includes('sucursal')) {
+        return `Estamos en <strong>Asunción, Paraguay</strong> 📍\nPodés consultarnos la dirección exacta por WhatsApp: ${INFO_CONTACTO.whatsapp}`;
+      }
+      if (i.includes('horario') || i.includes('abierto') || i.includes('hora')) {
+        return `Nuestros horarios de atención son:\n🕗 <strong>Lunes a Viernes:</strong> 08:00 – 18:00\n🕗 <strong>Sábados:</strong> 08:00 – 13:00`;
+      }
+      if (i.includes('taller') || i.includes('arreglar') || i.includes('reparar') || i.includes('mantenimiento') || i.includes('service')) {
+        return `Contamos con <strong>taller propio</strong> de armería y service de reels 🔧\nTrá tu equipo para un presupuesto sin cargo, o consultá por WhatsApp: ${INFO_CONTACTO.whatsapp}`;
+      }
+      if (i.includes('pesca')) {
+        return `Somos expertos en pesca deportiva 🎣\nTenemos:\n• Reels de alta gama (nacionales e importados)\n• Cañas de fibra y carbono\n• Señuelos, carnadas y accesorios\n\n¿Buscás algo en particular?`;
+      }
+      if (i.includes('armas') || i.includes('arma') || i.includes('aire comprimido')) {
+        return `Tenemos una amplia línea de armas 🎯:\n• Armas de aire comprimido\n• Rifles y carabinas\n• Accesorios y repuestos\n\nTodos nuestros productos cuentan con la documentación legal requerida. ¿Buscás algo específico?`;
+      }
+      if (i.includes('precio') || i.includes('costo') || i.includes('cuanto') || i.includes('valor')) {
+        return `Los precios varían según el producto y disponibilidad de stock. Para un presupuesto actualizado consultanos por WhatsApp: ${INFO_CONTACTO.whatsapp} 💰`;
+      }
+      if (i.includes('credito') || i.includes('cuotas') || i.includes('financ')) {
+        return `Sí, ofrecemos <strong>financiamiento flexible</strong> 💳\n• Crédito personalizado por cliente\n• Plazos de hasta 60 días\n• Pagos en efectivo, tarjeta o combinado\n\nConsultá tu límite de crédito con nosotros.`;
+      }
+      return `Entiendo. Soy el asesor virtual de <strong>GunsShop</strong> 🎯\nPuedo ayudarte con información sobre <strong>compras</strong>, <strong>requisitos legales</strong>, <strong>pesca</strong>, <strong>horarios</strong> y más.\n\n¿Qué necesitás saber?`;
+    }
+  });
 </script>
 </body>
 </html>
