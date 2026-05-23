@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GunsShop System - Test de Tienda Táctica</title>
+  
+  <!-- Iconos de FontAwesome (Igual que en tu web original) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* ==========================================================================
+       VARIABLES DE DISEÑO ORIGINALES
+       ========================================================================== */
+    :root {
+      --dark: #12130f;
+      --charcoal: #1a1c18;
+      --tan: #c9a84c;
+      --tan-light: #d8be73;
+      --cream: #f4f1ea;
+      --muted: #8a8d85;
+      --radius: 4px;
+      --trans: all 0.3s ease;
+      --ff-head: 'Impact', 'Arial Black', sans-serif;
+      --ff-cond: 'Arial Narrow', sans-serif;
+      --ff-body: 'Arial', sans-serif;
+    }
+
+    /* Estilos Base de Limpieza */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--dark);
+      color: var(--cream);
+      font-family: var(--ff-body);
+      overflow-x: hidden;
+      padding-bottom: 5rem;
+    }
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Estilos de Sección Compartidos */
+    #articulos {
+      padding: 5rem 0;
+    }
+    .section-label {
+      color: var(--tan);
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-family: var(--ff-head);
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .section-title span {
+      color: var(--tan);
+    }
+    #articulos p {
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 3rem;
+    }
+
+    /* ==========================================================================
+       GRID DE PRODUCTOS (Basado en tu servicios-grid original)
+       ========================================================================== */
+    .servicios-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .servicio-card {
+      background: var(--charcoal);
+      padding: 2.5rem 2rem;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.03);
+      transition: var(--trans);
+    }
+    .servicio-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(201,168,76,0.2);
+    }
+
+    /* Estructura específica para la Tarjeta de Producto */
+    /* ==========================================
+   PRODUCTOS ESTILO TIENDA ORIGINAL
+========================================== */
+
+      .product-card {
+        overflow: hidden;
+        padding: 0 !important;
+        background: var(--charcoal);
+        border: 1px solid rgba(255,255,255,.06);
+        transition: var(--trans);
+      }
+
+      .product-card:hover {
+        border-color: var(--tan);
+        transform: translateY(-5px);
+      }
+
+    .product-image {
+        height: 240px;
+        background: var(--olive);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        background: linear-gradient(
+          135deg,
+          rgba(255,255,255,.02),
+          rgba(255,255,255,.06)
+        );
+        padding: 1rem;
+        transition: transform .35s ease;
+      }
+
+      .product-card:hover .product-image img {
+        transform: scale(1.05);
+      }
+
+      .product-card:hover img {
+        transform: scale(1.06);
+      }
+
+      .product-tag {
+        position: absolute;
+        top: .8rem;
+        right: .8rem;
+
+        background: var(--tan);
+        color: var(--dark);
+
+        font-family: var(--ff-cond);
+        font-size: .72rem;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+
+        padding: .3rem .7rem;
+        border-radius: 3px;
+      }
+
+      .product-content {
+        padding: 1.2rem;
+      }
+
+      .product-name {
+        font-family: var(--ff-cond);
+        font-size: 1.1rem;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+
+        color: var(--cream);
+        line-height: 1.4;
+
+        margin-bottom: .8rem;
+      }
+
+      .product-price {
+        font-family: var(--ff-head);
+        color: var(--tan);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+    /* Botones Tácticos */
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      font-family: var(--ff-cond);
+      font-weight: 700;
+      text-transform: uppercase;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: var(--trans);
+      text-align: center;
+    }
+    .btn-primary {
+      background: var(--tan);
+      color: var(--dark);
+      border: none;
+    }
+    .btn-primary:hover {
+      background: var(--tan-light);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .btn-outline:hover {
+      border-color: var(--tan);
+      color: var(--tan);
+    }
+
+    /* ==========================================================================
+       INTERFAZ DE CARRITO Y COMPROBANTES
+       ========================================================================== */
+    /* Botón Flotante del Carrito */
+    #cart-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 5rem; /* Separado del borde para simular convivencia con chatbot */
+      background: var(--tan);
+      color: var(--dark);
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: var(--radius);
+      font-family: var(--ff-cond);
+      font-weight: 700;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: var(--trans);
+    }
+    #cart-toggle:hover {
+      background: var(--tan-light);
+      transform: scale(1.05);
+    }
+
+    /* Ventana del Carrito (Estructura espejo de tu chatbot) */
+    #cart-modal {
+      position: fixed;
+      bottom: 6rem;
+      right: 5rem;
+      width: 360px;
+      height: 500px;
+      background: var(--dark);
+      border: 1px solid var(--tan);
+      border-radius: var(--radius);
+      display: none;
+      flex-direction: column;
+      z-index: 1001;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+      overflow: hidden;
+    }
+    .chat-header {
+      background: var(--charcoal);
+      padding: 1rem;
+      border-bottom: 1px solid rgba(201,168,76,.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-header strong {
+      font-family: var(--ff-cond);
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--tan);
+    }
+    #chat-close {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    #cart-content {
+      flex: 1;
+      padding: 1.2rem;
+      overflow-y: auto;
+      background: linear-gradient(to bottom, var(--dark), var(--charcoal));
+    }
+    .cart-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .chat-input-area {
+      padding: 1rem;
+      background: var(--charcoal);
+      display: flex;
+      gap: 0.5rem;
+    }
+    #chat-send {
+      background: var(--tan);
+      border: none;
+      padding: 0.8rem 1rem;
+      font-family: var(--ff-cond);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Estilo del Ticket Digital / Remito */
+    .invoice-receipt {
+      background: #1e2019;
+      border: 1px dashed var(--tan);
+      padding: 1.2rem;
+      font-family: monospace;
+      color: #f1ebd9;
+      border-radius: 2px;
+    }
+    .invoice-title { 
+      text-align: center; 
+      font-weight: bold; 
+      font-size: 1.1rem; 
+      color: var(--tan); 
+    }
+    .invoice-meta { 
+      text-align: center; 
+      font-size: 0.7rem; 
+      color: #ff4444; 
+      margin: 0.2rem 0 0.8rem;
+      font-weight: bold;
+    }
+    .invoice-date { 
+      font-size: 0.75rem; 
+      color: var(--muted); 
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+    .invoice-line { 
+      display: flex; 
+      justify-content: space-between; 
+      font-size: 0.8rem; 
+      margin: 0.4rem 0; 
+    }
+    .invoice-total { 
+      text-align: right; 
+      font-weight: bold; 
+      color: var(--tan); 
+      font-size: 1.1rem; 
+      margin-top: 0.5rem;
+    }
+
+    /* ==========================================================================
+       MEDIA QUERIES - RESPONSIVE DE TU TIENDA (Fijado y Asegurado)
+       ========================================================================== */
+    @media (max-width: 900px) {
+      .servicios-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1.5rem !important;
+      }
+      #cart-toggle {
+        right: auto !important;
+        left: 1.5rem !important; /* Se traslada a la izquierda para no pisar tu chatbot */
+        bottom: 1.5rem !important;
+      }
+      #cart-modal {
+        left: 1.5rem !important;
+        right: 1.5rem !important;
+        width: calc(100% - 3rem) !important;
+        bottom: 5.5rem !important;
+        height: 70vh !important;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .servicios-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .section-title {
+        font-size: 2rem;
+      }
+    }
+
+    /* ==========================================================================
+       ESTILOS EXCLUSIVOS PARA IMPRESIÓN (PDF/PAPEL)
+       ========================================================================== */
+       @media print {
+      body * {
+        visibility: hidden; /* Oculta todo el sitio web temporalmente */
+      }
+      .print-target, .print-target * {
+        visibility: visible; /* Hace visible únicamente el ticket */
+      }
+      .print-target {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: #fff !important; /* Fondo blanco para ahorrar tinta */
+        color: #000 !important;
+        border: 1px dashed #000 !important;
+        padding: 1rem !important;
+      }
+      .invoice-title, .invoice-total {
+        color: #000 !important;
+      }
+      .invoice-meta {
+        color: #ff0000 !important;
+      }
+    }
+
+    /* ==========================================================================
+   BOTÓN VOLVER A LA PÁGINA PRINCIPAL
+   ========================================================================== */
+
+.store-back-area {
+  margin-bottom: 2rem;
+}
+
+.store-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+
+  background: var(--charcoal);
+  color: var(--cream);
+
+  border: 1px solid rgba(201,168,76,.25);
+  border-left: 4px solid var(--tan);
+
+  padding: 0.9rem 1.3rem;
+  border-radius: var(--radius);
+
+  font-family: var(--ff-cond);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  cursor: pointer;
+  transition: var(--trans);
+}
+
+.store-back-btn:hover {
+  background: rgba(201,168,76,.08);
+  color: var(--tan);
+  border-color: rgba(201,168,76,.5);
+
+  transform: translateX(-4px);
+}
+
+.store-back-btn i {
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .store-back-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+ 
+
+  <!-- SECCIÓN DE TIENDA -->
+  <section id="articulos">
+    <div class="container">
+      <div style="text-align:center;">
+
+        <div class="store-back-area">
+          <button class="store-back-btn" onclick="volverPaginaPrincipal()">
+            <i class="fa fa-arrow-left"></i>
+            Volver a la Página Principal
+          </button>
+        </div>
+
+        <div class="section-label">Catálogo</div>
+        <h2 class="section-title">Equipamiento <span>Disponible</span></h2>
+        <p>Seleccioná tus artículos para armar tu presupuesto y realiza tu nota de pedido digital en tiempo real.</p>
+      </div>
+
+      <!-- Contenedor Dinámico de Productos -->
+      <div class="servicios-grid" id="tienda-grid">
+        <!-- Generado mediante JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTÓN FLOTANTE DEL CARRITO -->
+  <button id="cart-toggle" onclick="toggleCartModal()">
+    <i class="fa fa-shopping-cart"></i> Carrito (<span id="cart-count">0</span>)
+  </button>
+
+  <!-- MODAL / VENTANA DEL COMPROBANTE -->
+  <div id="cart-modal">
+    <div class="chat-header">
+      <strong><i class="fa fa-file-invoice" style="margin-right: 0.5rem;"></i> GUNSSHOP SYSTEM - NOTA DE PEDIDO</strong>
+      <button id="chat-close" onclick="toggleCartModal()">&times;</button>
+    </div>
+    
+    <div id="cart-content">
+      <!-- Lista de Productos en el Carrito -->
+      <div id="cart-items-list"></div>
+      
+      <!-- Zona del Ticket (Oculta hasta procesar compra) -->
+      <div id="invoice-area" style="display:none;">
+        <!-- Le agregamos una clase "print-target" para aislarlo al imprimir -->
+        <div class="invoice-receipt print-target">
+          <div class="invoice-title">GUNS SHOP PARAGUAY</div>
+          <div class="invoice-meta">DOCUMENTO INTERNO - NO VÁLIDO COMO FACTURA</div>
+          <div class="invoice-date" id="invoice-date"></div>
+          <hr style="border: none; border-top: 1px dashed rgba(201,168,76,.3); margin: 0.8rem 0;">
+          <div id="invoice-table"></div>
+          <hr style="border: none; border-top: 1px dashed rgba(201,168,76,.3); margin: 0.8rem 0;">
+          <div class="invoice-total" id="invoice-total"></div>
+        </div>
+        
+        <!-- Bloque de acciones del Comprobante -->
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem;">
+          <button onclick="enviarPedidoWhatsApp()" class="btn btn-primary" style="width:100%; padding:0.7rem; background:#25D366; color:#fff;" id="wsp-btn">
+            <i class="fab fa-whatsapp"></i> Enviar Pedido por WhatsApp
+          </button>
+          
+          <button class="btn btn-outline" style="width:100%; padding:0.7rem;" onclick="imprimirNotaPedido()">
+            <i class="fa fa-print"></i> Imprimir / Guardar PDF
+          </button>
+          
+          <button class="btn btn-outline" style="width:100%; padding:0.5rem; font-size:0.85rem; border-color:transparent; color:var(--muted);" onclick="volverAlCarrito()">
+            <i class="fa fa-arrow-left"></i> Volver a la Tienda
+          </button>
+        </div>
+      </div>
+    
+    <!-- Acción del Pie de Ventana -->
+    <div class="chat-input-area" id="cart-actions">
+      <button id="chat-send" style="width: 100%;" onclick="procesarCompra()">
+        GENERAR NOTA DE PEDIDO <i class="fa fa-angle-right" style="margin-left:0.5rem"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       LÓGICA JAVASCRIPT
+       ========================================================================== */ -->
+       <script>
+        const productosData = [
+      {
+        id: 1,
+        name: "Rifle de Aire PCP Beeman 1358",
+        price: 3450000,
+        cat: "Caza",
+        img: "img_tienda/rifle-aire-pcp-beeman-1358.jpg"
+      },
+      {
+        id: 2,
+        name: "Reel Frontal Shimano Sedona 4000",
+        price: 820000,
+        cat: "Pesca",
+        img: "img_tienda/reel-frontal-shimano-sedona-4000.jpg"
+      },
+      {
+        id: 3,
+        name: "Caña Marine Sports Evolution 7'0\"",
+        price: 450000,
+        cat: "Pesca",
+        img: "img_tienda/cana-marine-sports-evolution-70.jpg"
+      },
+      {
+        id: 4,
+        name: "Balines JSB Exact King .25 (150un)",
+        price: 180000,
+        cat: "Caza",
+        img: "img_tienda/balines-jsb-exact-king-25-150un.jpg"
+      },
+      {
+        id: 5,
+        name: "Conservadora Coleman 52 QT c/Ruedas",
+        price: 690000,
+        cat: "Camping",
+        img: "img_tienda/conservadora-coleman-52qt-ruedas.jpg"
+      },
+      {
+        id: 6,
+        name: "Linterna Táctica Fenix TK16 3100LM",
+        price: 950000,
+        cat: "Caza",
+        img: "img_tienda/linterna-fenix-tk16-3100lm.jpg"
+      },
+      {
+        id: 7,
+        name: "Cuchillo Muela Scorpion Táctico",
+        price: 580000,
+        cat: "Caza",
+        img: "img_tienda/cuchillo-muela-scorpion.jpg"
+      },
+      {
+        id: 8,
+        name: "Caja de Pesca Plano 3 Bandejas",
+        price: 290000,
+        cat: "Pesca",
+        img: "img_tienda/caja-pesca-plano-3-bandejas.jpg"
+      },
+      {
+        id: 9,
+        name: "Señuelo Rapala Magnum 14cm",
+        price: 125000,
+        cat: "Pesca",
+        img: "img_tienda/senuelo-rapala-magnum-14cm.jpg"
+      },
+      {
+        id: 10,
+        name: "Multihebra Sufix Matrix Pro 250m",
+        price: 210000,
+        cat: "Pesca",
+        img: "img_tienda/multihebra-sufix-matrix-pro-250m.jpg"
+      },
+      {
+        id: 11,
+        name: "Mira Telescópica Discovery 4-16x44",
+        price: 1350000,
+        cat: "Caza",
+        img: "img_tienda/mira-discovery-4-16x44.jpg"
+      },
+      {
+        id: 12,
+        name: "Chaleco Táctico Porta Accesorios",
+        price: 320000,
+        cat: "Caza",
+        img: "img_tienda/chaleco-tactico-porta-accesorios.jpg"
+      },
+      {
+        id: 13,
+        name: "Inflador de Alta Presión PCP 4500PSI",
+        price: 750000,
+        cat: "Caza",
+        img: "img_tienda/inflador-pcp-4500psi.jpg"
+      },
+      {
+        id: 14,
+        name: "Sombrero Legionario c/Protección UV",
+        price: 95000,
+        cat: "Camping",
+        img: "img_tienda/sombrero-legionario-uv.jpg"
+      },
+      {
+        id: 15,
+        name: "Anzuelos Mustad Classic (100un)",
+        price: 45000,
+        cat: "Pesca",
+        img: "img_tienda/anzuelos-mustad-classic-100un.jpg"
+      },
+      {
+        id: 16,
+        name: "Camisa Secado Rápido Camuflada",
+        price: 240000,
+        cat: "Caza",
+        img: "img_tienda/camisa-secado-rapido-camuflada.jpg"
+      },
+      {
+        id: 17,
+        name: "Red de Pesca Tipo Atarraya 3m",
+        price: 380000,
+        cat: "Pesca",
+        img: "img_tienda/red-pesca-atarraya-3m.jpg"
+      },
+      {
+        id: 18,
+        name: "Silbato de Supervivencia + Brújula",
+        price: 50000,
+        cat: "Camping",
+        img: "img_tienda/silbato-supervivencia-brujula.jpg"
+      },
+      {
+        id: 19,
+        name: "Bolsa de Dormir Térmica -5°C",
+        price: 340000,
+        cat: "Camping",
+        img: "img_tienda/bolsa-dormir-termica-5c.jpg"
+      },
+      {
+        id: 20,
+        name: "Carpa Coleman Instant Cabin 4P",
+        price: 1650000,
+        cat: "Camping",
+        img: "img_tienda/carpa-coleman-instant-cabin-4p.jpg"
+      }
+    ];
+    
+        let carrito = [];
+        let nroPedidoActual = "";
+        let totalPedidoActual = 0;
+        let productosPresupuestados = []; // Copia de respaldo para operar tras el checkout
+    
+        function renderizarTienda() {
+          const grid = document.getElementById('tienda-grid');
+          if (!grid) return;
+    
+          grid.innerHTML = productosData.map(producto => `
+          <div class="servicio-card product-card">
+
+            <div class="product-image">
+              <img src="${producto.img}" alt="${producto.name}">
+              <span class="product-tag">
+                ${producto.cat}
+              </span>
+            </div>
+
+            <div class="product-content">
+              <h4 class="product-name">
+                ${producto.name}
+              </h4>
+
+              <div class="product-price">
+                ${producto.price.toLocaleString('es-PY')} ₲
+              </div>
+
+              <button
+                class="btn btn-primary"
+                style="width:100%; padding:0.7rem;"
+                onclick="agregarAlCarrito(${producto.id})"
+              >
+                <i class="fa fa-cart-plus"></i>
+                Agregar al carrito
+              </button>
+            </div>
+
+          </div>
+        `).join('');
+        }
+    
+        function agregarAlCarrito(id) {
+          const producto = productosData.find(p => p.id === id);
+          const existente = carrito.find(item => item.id === id);
+    
+          if (existente) {
+            existente.cantidad++;
+          } else {
+            carrito.push({ ...producto, cantidad: 1 });
+          }
+          actualizarContadorBoton();
+        }
+    
+        function actualizarContadorBoton() {
+          const totalItems = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+          document.getElementById('cart-count').innerText = totalItems;
+        }
+    
+        function toggleCartModal() {
+          const modal = document.getElementById('cart-modal');
+          const estaAbierto = modal.style.display === 'flex';
+          modal.style.display = estaAbierto ? 'none' : 'flex';
+          
+          if (!estaAbierto && document.getElementById('invoice-area').style.display !== 'block') {
+            mostrarVistaCarrito();
+          }
+        }
+    
+        function mostrarVistaCarrito() {
+          const listArea = document.getElementById('cart-items-list');
+          const invoiceArea = document.getElementById('invoice-area');
+          const actionsArea = document.getElementById('cart-actions');
+    
+          invoiceArea.style.display = 'none';
+          listArea.style.display = 'block';
+          actionsArea.style.display = 'flex';
+    
+          if (carrito.length === 0) {
+            listArea.innerHTML = '<p style="text-align:center; color:var(--muted); padding:3rem 1rem; font-size:0.9rem;">No seleccionaste artículos aún.</p>';
+            actionsArea.style.display = 'none';
+            return;
+          }
+    
+          listArea.innerHTML = carrito.map(item => `
+            <div class="cart-item-row">
+              <div>
+                <div style="font-size:0.85rem; font-weight:bold; max-width:230px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${item.name}</div>
+                <div style="font-size:0.8rem; color:var(--tan); margin-top:0.2rem;">${item.cantidad} x ${item.price.toLocaleString('es-PY')} ₲</div>
+              </div>
+              <button class="btn btn-outline" style="padding:0.2rem 0.5rem; font-size:0.85rem; border-color:rgba(255,255,255,0.1);" onclick="quitarDelCarrito(${item.id})">
+                <i class="fa fa-trash-can"></i>
+              </button>
+            </div>
+          `).join('');
+        }
+    
+        function quitarDelCarrito(id) {
+          carrito = carrito.filter(item => item.id !== id);
+          actualizarContadorBoton();
+          mostrarVistaCarrito();
+        }
+    
+        // Lógica de Generación de Nota de Pedido
+        function procesarCompra() {
+          if (carrito.length === 0) return;
+    
+          // Hacemos un respaldo de los productos antes de vaciar/procesar
+          productosPresupuestados = [...carrito];
+    
+          const listArea = document.getElementById('cart-items-list');
+          const invoiceArea = document.getElementById('invoice-area');
+          const actionsArea = document.getElementById('cart-actions');
+    
+          listArea.style.display = 'none';
+          actionsArea.style.display = 'none';
+          invoiceArea.style.display = 'block';
+    
+          const fechaActual = new Date();
+          nroPedidoActual = "GS-" + Math.floor(100000 + Math.random() * 900000);
+          document.getElementById('invoice-date').innerText = `FECHA: ${fechaActual.toLocaleDateString('es-PY')} - ${fechaActual.toLocaleTimeString('es-PY')}\nCOMPROBANTE NRO: ${nroPedidoActual}\nESTADO: PENDIENTE DE VALIDACIÓN`;
+    
+          totalPedidoActual = 0;
+          const filasTicket = productosPresupuestados.map(item => {
+            const subtotal = item.price * item.cantidad;
+            totalPedidoActual += subtotal;
+            
+            let nombreCorto = item.name.length > 20 ? item.name.substring(0, 18) + ".." : item.name;
+            return `
+              <div class="invoice-line">
+                <span>${item.cantidad}x ${nombreCorto}</span>
+                <span>${subtotal.toLocaleString('es-PY')} ₲</span>
+              </div>
+            `;
+          }).join('');
+    
+          document.getElementById('invoice-table').innerHTML = filasTicket;
+          document.getElementById('invoice-total').innerText = `TOTAL PEDIDO: ${totalPedidoActual.toLocaleString('es-PY')} ₲`;
+          
+          // Reseteamos el carrito principal para futuras compras
+          carrito = [];
+          actualizarContadorBoton();
+        }
+    
+        // ENVIAR POR WHATSAPP
+        function enviarPedidoWhatsApp() {
+          // Reemplaza este número por tu número de teléfono de contacto (con código de país, ej: 595981123456)
+          const telefonoContacto = "5959XXXXXXXXX"; 
+          
+          let mensaje = `*GUNS SHOP PARAGUAY*\n`;
+          mensaje += `*NOTA DE PEDIDO:* ${nroPedidoActual}\n`;
+          mensaje += `--------------------------------------\n`;
+          
+          productosPresupuestados.forEach(item => {
+            const subtotal = item.price * item.cantidad;
+            mensaje += `• ${item.cantidad}x ${item.name} -> ${subtotal.toLocaleString('es-PY')} ₲\n`;
+          });
+          
+          mensaje += `--------------------------------------\n`;
+          mensaje += `*TOTAL ESTIMADO:* ${totalPedidoActual.toLocaleString('es-PY')} ₲\n\n`;
+          mensaje += `Solicito validación de stock de estos artículos.`;
+    
+          // Encodificar texto para URL de WhatsApp
+          const mensajeUrl = encodeURIComponent(mensaje);
+          const urlWhatsApp = `https://wa.me/${telefonoContacto}?text=${mensajeUrl}`;
+          
+          // Abrir en pestaña nueva
+          window.open(urlWhatsApp, '_blank');
+        }
+    
+        // IMPRIMIR / GUARDAR PDF
+        function imprimirNotaPedido() {
+          window.print();
+        }
+    
+        // VOLVER A LA TIENDA
+        function volverAlCarrito() {
+          const listArea = document.getElementById('cart-items-list');
+          const invoiceArea = document.getElementById('invoice-area');
+          const actionsArea = document.getElementById('cart-actions');
+          
+          invoiceArea.style.display = 'none';
+          listArea.style.display = 'block';
+          actionsArea.style.display = 'flex';
+          
+          // Si volvió atrás, recuperamos el presupuesto al carrito interactivo
+          if (productosPresupuestados.length > 0) {
+            carrito = [...productosPresupuestados];
+            actualizarContadorBoton();
+          }
+          mostrarVistaCarrito();
+        }
+    
+        window.addEventListener('DOMContentLoaded', renderizarTienda);
+
+        function volverPaginaPrincipal() {
+          if (document.referrer) {
+            window.history.back();
+          } else {
+            window.location.href = "index.html";
+          }
+        }
+
+      </script>
+</body>
+</html>
