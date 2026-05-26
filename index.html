@@ -420,6 +420,22 @@
       color: var(--tan);
       position: relative;
     }
+    .canhapescar {
+      height: 160px;
+      background: #1e2e2a; /* Color de fondo asignado */
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      position: relative;
+      overflow: hidden; /* Evita que la imagen se salga de los bordes redondeados si los hay */
+    }
+    .canhapescar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ajusta la imagen para llenar el contenedor sin deformarse, similar a la captura */
+      display: block;
+    }
+
     .articulo-tag {
       position: absolute;
       top: .7rem; right: .7rem;
@@ -1510,8 +1526,8 @@
       </div>
 
       <div class="articulo-card reveal">
-        <div class="articulo-img" style="background:#1e2e2a">
-          <img src=https://acdn-us.mitiendanube.com/stores/001/192/523/products/4-1-e48b4a351a9b4a78bd17406118492352-1024-1024.png alt="imagen caña" ></img>
+        <div class="articulo-img canhapescar">
+          <img src="https://acdn-us.mitiendanube.com/stores/001/192/523/products/4-1-e48b4a351a9b4a78bd17406118492352-1024-1024.png" alt="imagen caña">
           <span class="articulo-tag">Nuevo</span>
         </div>
         <div class="articulo-body">
