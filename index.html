@@ -48,6 +48,21 @@
         cursor: pointer;
     }
 
+    .articulo-img.img-error::before {
+        content: "\f05b";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        font-size: 3rem;
+        color: var(--tan);
+    }
+
+    .articulo-img.img-error {
+        background: var(--olive);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .articulo-img img,
     .articulo-foto {
         width: 100%;
@@ -1558,8 +1573,9 @@
         <div class="articulo-img canhapescar">
           <img
             src="https://www.triestina.com.ar/wp-content/uploads/2026/03/D_NQ_NP_2X_650211-MLA10795751005.png"
-            alt="Cañas de pescar"
+            alt=""
             class="articulo-foto"
+            onerror="this.style.display='none'; this.parentElement.classList.add('img-error')"
           >
           <span class="articulo-tag">Destacado</span>
         </div>
