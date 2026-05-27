@@ -381,31 +381,70 @@
     /* ==========================================================================
        ESTILOS EXCLUSIVOS PARA IMPRESIÓN (PDF/PAPEL)
        ========================================================================== */
-       @media print {
-      body * {
-        visibility: hidden; /* Oculta todo el sitio web temporalmente */
-      }
-      .print-target, .print-target * {
-        visibility: visible; /* Hace visible únicamente el ticket */
-      }
-      .print-target {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        background: #fff !important; /* Fondo blanco para ahorrar tinta */
-        color: #000 !important;
-        border: 1px dashed #000 !important;
-        padding: 1rem !important;
-      }
-      .invoice-title, .invoice-total {
-        color: #000 !important;
-      }
-      .invoice-meta {
-        color: #ff0000 !important;
-      }
-    }
+     /* ==========================================================================
+   IMPRESIÓN PDF / PAPEL (ARREGLADO)
+========================================================================== */
+@media print {
 
+  @page {
+    size: auto;
+    margin: 10mm;
+  }
+
+  html,
+  body {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    background: #fff !important;
+  }
+
+  /* Oculta todo */
+  body * {
+    display: none !important;
+  }
+
+  /* Mostrar únicamente el ticket */
+  .print-target,
+  .print-target * {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  .print-target {
+    position: static !important;
+    width: 100% !important;
+    max-width: 700px;
+    margin: 0 auto !important;
+
+    background: #fff !important;
+    color: #000 !important;
+
+    border: 1px dashed #000 !important;
+    border-radius: 0 !important;
+
+    padding: 20px !important;
+
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .invoice-line {
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+
+  .invoice-title,
+  .invoice-total,
+  .invoice-meta,
+  .invoice-date {
+    color: #000 !important;
+  }
+
+  hr {
+    border-top: 1px dashed #000 !important;
+  }
+}
     /* ==========================================================================
    BOTÓN VOLVER A LA PÁGINA PRINCIPAL
    ========================================================================== */
@@ -692,7 +731,7 @@
         let carrito = [];
         let nroPedidoActual = "";
         let totalPedidoActual = 0;
-        let productosPresupuestados = []; // Copia de respaldo para operar tras el checkout
+        let productosPresupuestados = [];
     
         function renderizarTienda() {
           const grid = document.getElementById('tienda-grid');
@@ -835,7 +874,6 @@
     
         // ENVIAR POR WHATSAPP
         function enviarPedidoWhatsApp() {
-          // Reemplaza este número por tu número de teléfono de contacto (con código de país, ej: 595981123456)
           const telefonoContacto = "595992997128"; 
           
           let mensaje = `*GUNS SHOP PARAGUAY*\n`;
@@ -861,7 +899,10 @@
     
         // IMPRIMIR / GUARDAR PDF
         function imprimirNotaPedido() {
-          window.print();
+          setTimeout(() => {
+            window.print();
+          }, 200);
+
         }
     
         // VOLVER A LA TIENDA
