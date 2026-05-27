@@ -384,67 +384,9 @@
      /* ==========================================================================
    IMPRESIÓN PDF / PAPEL (ARREGLADO)
 ========================================================================== */
-@media print {
-
-  @page {
-    size: auto;
-    margin: 10mm;
-  }
-
-  html,
-  body {
-    width: 100%;
-    height: auto;
-    overflow: hidden;
-    background: #fff !important;
-  }
-
-  /* Oculta todo */
-  body * {
-    display: none !important;
-  }
-
-  /* Mostrar únicamente el ticket */
-  .print-target,
-  .print-target * {
-    display: block !important;
-    visibility: visible !important;
-  }
-
-  .print-target {
-    position: static !important;
-    width: 100% !important;
-    max-width: 700px;
-    margin: 0 auto !important;
-
-    background: #fff !important;
-    color: #000 !important;
-
-    border: 1px dashed #000 !important;
-    border-radius: 0 !important;
-
-    padding: 20px !important;
-
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-  }
-
-  .invoice-line {
-    display: flex !important;
-    justify-content: space-between !important;
-  }
-
-  .invoice-title,
-  .invoice-total,
-  .invoice-meta,
-  .invoice-date {
-    color: #000 !important;
-  }
-
-  hr {
-    border-top: 1px dashed #000 !important;
-  }
-}
+     @page {
+        margin: 10mm;
+      }
     /* ==========================================================================
    BOTÓN VOLVER A LA PÁGINA PRINCIPAL
    ========================================================================== */
@@ -769,22 +711,31 @@
           </div>
         `).join('');
         }
-    
-        function agregarAlCarrito(id) {
-          const producto = productosData.find(p => p.id === id);
-          const existente = carrito.find(item => item.id === id);
-    
-          if (existente) {
-            existente.cantidad++;
-          } else {
-            carrito.push({ ...producto, cantidad: 1 });
+     function actualizarContadorBoton() {
+          const totalItems = carrito.reduce(
+            (acc, item) => acc + item.cantidad,
+            0
+          );
+
+          const cartBtn = document.getElementById('cart-toggle');
+          const cartCount = document.getElementById('cart-count');
+
+          cartCount.innerText = totalItems;
+
+          // Si hay productos → verde
+          if (totalItems > 0) {
+            cartBtn.style.background = "#25D366";
+            cartBtn.style.color = "#fff";
+            cartBtn.style.boxShadow = "0 0 20px rgba(37,211,102,.45)";
+            cartBtn.style.transform = "scale(1.03)";
+          } 
+          // Si está vacío → vuelve al color original
+          else {
+            cartBtn.style.background = "var(--tan)";
+            cartBtn.style.color = "var(--dark)";
+            cartBtn.style.boxShadow = "0 10px 30px rgba(0,0,0,0.5)";
+            cartBtn.style.transform = "scale(1)";
           }
-          actualizarContadorBoton();
-        }
-    
-        function actualizarContadorBoton() {
-          const totalItems = carrito.reduce((acc, item) => acc + item.cantidad, 0);
-          document.getElementById('cart-count').innerText = totalItems;
         }
     
         function toggleCartModal() {
@@ -899,11 +850,102 @@
     
         // IMPRIMIR / GUARDAR PDF
         function imprimirNotaPedido() {
-          setTimeout(() => {
-            window.print();
-          }, 200);
+            const ticket = document.querySelector('.invoice-receipt');
 
-        }
+            if (!ticket) {
+              alert("No hay ticket para imprimir");
+              return;
+            }
+
+            const ventana = window.open('', '_blank');
+
+            ventana.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                  <title>Imprimir Ticket</title>
+
+                  <style>
+                    body{
+                      font-family: monospace;
+                      background: white;
+                      margin: 0;
+                      padding: 20px;
+                    }
+
+                    .ticket{
+                      width: 100%;
+                      max-width: 420px;
+                      margin: auto;
+                      border: 1px dashed #000;
+                      padding: 15px;
+                    }
+
+                    .invoice-title{
+                      text-align:center;
+                      font-weight:bold;
+                      font-size:18px;
+                      margin-bottom:10px;
+                    }
+
+                    .invoice-meta{
+                      text-align:center;
+                      color:red;
+                      font-size:12px;
+                      margin-bottom:10px;
+                    }
+
+                    .invoice-date{
+                      font-size:12px;
+                      white-space:pre-line;
+                      margin-bottom:10px;
+                    }
+
+                    .invoice-line{
+                      display:flex;
+                      justify-content:space-between;
+                      font-size:14px;
+                      margin:6px 0;
+                    }
+
+                    .invoice-total{
+                      margin-top:15px;
+                      text-align:right;
+                      font-weight:bold;
+                      font-size:16px;
+                    }
+
+                    hr{
+                      border:none;
+                      border-top:1px dashed #000;
+                      margin:10px 0;
+                    }
+
+                    @page {
+                      margin: 10mm;
+                    }
+                  </style>
+                </head>
+
+                <body>
+                  <div class="ticket">
+                    ${ticket.innerHTML}
+                  </div>
+
+                  <script>
+                    window.onload = function(){
+                      window.print();
+                      window.onafterprint = function(){
+                        window.close();
+                      }
+                    }
+                  <\/script>
+                </body>
+                </html>
+            `);
+
+            ventana.document.close();
+          }
     
         // VOLVER A LA TIENDA
         function volverAlCarrito() {
