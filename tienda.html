@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GunsShop System - Test de Tienda Táctica</title>
   
-  <!-- Iconos de FontAwesome (Igual que en tu web original) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
@@ -491,7 +490,7 @@
         <!-- Le agregamos una clase "print-target" para aislarlo al imprimir -->
         <div class="invoice-receipt print-target">
           <div class="invoice-title">GUNS SHOP PARAGUAY</div>
-          <div class="invoice-meta">DOCUMENTO INTERNO - NO VÁLIDO COMO FACTURA</div>
+          <div class="invoice-meta">DOCUMENTO INTERNO VALIDO POR 24hs - NO VÁLIDO COMO FACTURA</div>
           <div class="invoice-date" id="invoice-date"></div>
           <hr style="border: none; border-top: 1px dashed rgba(201,168,76,.3); margin: 0.8rem 0;">
           <div id="invoice-table"></div>
@@ -711,6 +710,19 @@
           </div>
         `).join('');
         }
+     
+        function agregarAlCarrito(id) {
+          const producto = productosData.find(p => p.id === id);
+          const existente = carrito.find(item => item.id === id);
+    
+          if (existente) {
+            existente.cantidad++;
+          } else {
+            carrito.push({ ...producto, cantidad: 1 });
+          }
+          actualizarContadorBoton();
+        }
+
      function actualizarContadorBoton() {
           const totalItems = carrito.reduce(
             (acc, item) => acc + item.cantidad,
