@@ -2238,6 +2238,29 @@ const navbar = document.getElementById('navbar');
       if (t) t.remove();
     }
 
+      //lanza html de precios por producto
+      let secretBuffer = [];
+
+      document.addEventListener("keydown", function (e) {
+        secretBuffer.push(e.key.toLowerCase());
+
+        // mantenemos solo las últimas 3 teclas
+        if (secretBuffer.length > 3) {
+          secretBuffer.shift();
+        }
+
+        // combinación secreta: A S D
+        if (secretBuffer.join("") === "asd") {
+          openSecretPage();
+          secretBuffer = []; // reset
+        }
+      });
+
+      function openSecretPage() {
+        window.open("planes.html", "_blank"); 
+      }
+
+
     function getBotResponse(input) {
       const i = input.toLowerCase();
 

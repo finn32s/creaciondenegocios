@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planes de Desarrollo Web </title>
+
+<style>
+:root {
+  --dark:#12130f;
+  --charcoal:#1a1c18;
+  --tan:#c9a84c;
+  --tan-light:#d8be73;
+  --cream:#f4f1ea;
+  --muted:#8a8d85;
+  --radius:8px;
+  --trans:all .3s ease;
+  --ff:'Arial', sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:var(--ff);}
+
+body{
+  background: radial-gradient(circle at top, #1a1c18, #0f100d);
+  color:var(--cream);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* OVERLAY */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* MODAL */
+.modal{
+  width:95%;
+  max-width:1100px;
+  background:var(--charcoal);
+  border:1px solid rgba(201,168,76,.3);
+  border-radius:var(--radius);
+  padding:2rem;
+  box-shadow:0 20px 60px rgba(0,0,0,.8);
+  animation:pop .3s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(.9);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+
+.title{
+  text-align:center;
+  font-size:2rem;
+  margin-bottom:1rem;
+  color:var(--tan);
+  letter-spacing:1px;
+}
+
+.subtitle{
+  text-align:center;
+  color:var(--muted);
+  margin-bottom:2rem;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+
+/* CARD */
+.card{
+  background:var(--dark);
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:var(--radius);
+  padding:1.5rem;
+  transition:var(--trans);
+  position:relative;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  border-color:var(--tan);
+}
+
+/* DESTACADO */
+.featured{
+  border:1px solid var(--tan);
+  transform:scale(1.05);
+}
+
+.badge{
+  position:absolute;
+  top:-10px;
+  right:10px;
+  background:var(--tan);
+  color:#000;
+  font-size:.7rem;
+  padding:.3rem .6rem;
+  font-weight:bold;
+  border-radius:3px;
+}
+
+/* TEXT */
+.plan-title{
+  font-size:1.3rem;
+  margin-bottom:.5rem;
+}
+
+.price{
+  font-size:2rem;
+  color:var(--tan);
+  margin-bottom:.5rem;
+}
+
+.small{
+  color:var(--muted);
+  font-size:.85rem;
+  margin-bottom:1rem;
+}
+
+/* LIST */
+ul{
+  list-style:none;
+  margin-bottom:1.5rem;
+}
+
+ul li{
+  padding:.4rem 0;
+  font-size:.9rem;
+  color:var(--cream);
+}
+
+ul li::before{
+  content:"✔ ";
+  color:var(--tan);
+}
+
+/* BUTTON */
+button{
+  width:100%;
+  padding:.8rem;
+  border:none;
+  cursor:pointer;
+  font-weight:bold;
+  border-radius:5px;
+  transition:var(--trans);
+}
+
+.buy{
+  background:var(--tan);
+  color:#000;
+}
+
+.buy:hover{
+  background:var(--tan-light);
+}
+
+/* FOOT NOTE */
+.note{
+  text-align:center;
+  margin-top:2rem;
+  font-size:.8rem;
+  color:var(--muted);
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr;}
+  .featured{transform:none;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay">
+  <div class="modal">
+
+    <div class="title">Planes de Desarrollo Web</div>
+    <div class="subtitle">Elige el nivel de tu sistema ecommerce profesional</div>
+
+    <div class="grid">
+
+      <!-- PLAN ECONOMICO -->
+      <div class="card">
+        <div class="plan-title">Económico</div>
+        <div class="price">USD 650</div>
+        <div class="small">Pago único</div>
+
+        <ul>
+          <li>Ecommerce básico funcional</li>
+          <li>Hosting + dominio 1 año</li>
+          <li>Carrito de compras</li>
+          <li>Diseño responsive</li>
+          <li>WhatsApp integrado</li>
+          <li>Soporte 30 días</li>
+        </ul>
+
+        <button class="buy" onclick="comprar('Económico')">Contratar</button>
+      </div>
+
+      <!-- PLAN PRO -->
+      <div class="card featured">
+        <div class="badge">MÁS VENDIDO</div>
+
+        <div class="plan-title">Profesional</div>
+        <div class="price">USD 240/mes</div>
+        <div class="small">10 meses (USD 2400 total)</div>
+
+        <ul>
+          <li>Ecommerce profesional completo</li>
+          <li>Diseño premium personalizado</li>
+          <li>Chatbot automatizado</li>
+          <li>SEO básico incluido</li>
+          <li>Hosting + dominio</li>
+          <li>Mantenimiento continuo</li>
+          <li>Soporte prioritario</li>
+        </ul>
+
+        <button class="buy" onclick="comprar('Profesional')">Contratar PRO</button>
+      </div>
+
+      <!-- PLAN PERSONALIZADO -->
+      <div class="card">
+        <div class="plan-title">Personalizado</div>
+        <div class="price">USD 450/mes</div>
+        <div class="small">10 meses (USD 4500 total)</div>
+
+        <ul>
+          <li>Todo lo del plan PRO</li>
+          <li>Bot entrenado a medida</li>
+          <li>Automatizaciones avanzadas</li>
+          <li>Integraciones externas</li>
+          <li>Diseño exclusivo</li>
+          <li>Soporte VIP</li>
+        </ul>
+
+        <button class="buy" onclick="comprar('Personalizado')">Contratar VIP</button>
+      </div>
+
+    </div>
+
+    <div class="note">
+      Sistema de cotización flexible. Puedes pagar mensual o total. 
+    </div>
+
+  </div>
+</div>
+
+<script>
+function comprar(plan){
+  alert("Seleccionaste el plan: " + plan + "\nTe contactaremos para continuar el proceso.");
+}
+</script>
+
+</body>
+</html>
