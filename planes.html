@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Planes de Desarrollo Web </title>
+<title>Planes de Desarrollo Web - GunsShop System</title>
 
 <style>
 :root {
@@ -206,7 +206,7 @@ button{
           <li>Soporte 30 días</li>
         </ul>
 
-        <button class="buy" onclick="comprar('Económico')">Contratar</button>
+        <button class="buy" onclick="enviarPedidoWhatsApp('Económico')">Contratar</button>
       </div>
 
       <!-- PLAN PRO -->
@@ -227,7 +227,7 @@ button{
           <li>Soporte prioritario</li>
         </ul>
 
-        <button class="buy" onclick="comprar('Profesional')">Contratar PRO</button>
+        <button class="buy" onclick="enviarPedidoWhatsApp('Profesional')">Contratar PRO</button>
       </div>
 
       <!-- PLAN PERSONALIZADO -->
@@ -245,13 +245,13 @@ button{
           <li>Soporte VIP</li>
         </ul>
 
-        <button class="buy" onclick="comprar('Personalizado')">Contratar VIP</button>
+        <button class="buy" onclick=enviarPedidoWhatsApp('Personalizado')">Contratar VIP</button>
       </div>
 
     </div>
 
     <div class="note">
-      Sistema de cotización flexible. Puedes pagar mensual o total. 
+      Sistema de cotización flexible. Puedes pagar mensual o total. Proyecto recuperable en 10 meses.
     </div>
 
   </div>
@@ -261,6 +261,15 @@ button{
 function comprar(plan){
   alert("Seleccionaste el plan: " + plan + "\nTe contactaremos para continuar el proceso.");
 }
+
+function enviarPedidoWhatsApp() {
+          const telefonoContacto = "595992997128"; 
+          const urlWhatsApp = `https://wa.me/${telefonoContacto}`;
+          
+          // Abrir en pestaña nueva
+          window.open(urlWhatsApp, '_blank');
+        }
+
 </script>
 
 </body>
